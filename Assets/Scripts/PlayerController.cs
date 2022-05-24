@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    public float speed = 30;
     public float maxSpeed = 15;
     public float upSpeed = 21;
     private Rigidbody2D marioBody;
