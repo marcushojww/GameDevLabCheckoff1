@@ -6,18 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 30;
+    public float speed = 40;
     public float maxSpeed = 15;
     public float upSpeed = 21;
     private Rigidbody2D marioBody;
     private bool onGroundState = true;
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
-    public Transform enemyLocation;
-    public Text scoreText;
-    private int score = 0;
-    private bool countScoreState = false;
-    // called when the cube hits the floor
+    // public Transform enemyLocation;
+    // public Text scoreText;
+    // private int score = 0;
+    // private bool countScoreState = false;
+    private Animator marioAnimator;
+    private AudioSource marioAudio;
+
+    void  PlayJumpSound(){
+        marioAudio.PlayOneShot(marioAudio.clip);
+    }
   
     // Start is called before the first frame update
     void Start()
@@ -26,6 +31,8 @@ public class PlayerController : MonoBehaviour
 	    Application.targetFrameRate =  30;
 	    marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
+        marioAnimator = GetComponent<Animator>();
+        marioAudio = GetComponent<AudioSource>();
     }
 
     void FixedUpdate() 
@@ -47,7 +54,8 @@ public class PlayerController : MonoBehaviour
       if (Input.GetKeyDown("space") && onGroundState){
           marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
           onGroundState = false;
-          countScoreState = true; //check if Gomba is underneath
+        //   countScoreState = true; //check if Gomba is underneath
+          marioAnimator.SetBool("onGround", onGroundState);
       }
     }
 
@@ -55,9 +63,15 @@ public class PlayerController : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Ground")){
             onGroundState = true;
-            countScoreState = false; // reset score state
-            scoreText.text = "SCORE: " + score.ToString();
-        } 
+            // countScoreState = false; // reset score state
+            // scoreText.text = "SCORE: " + score.ToString();
+            marioAnimator.SetBool("onGround", onGroundState);
+        }
+
+        if (col.gameObject.CompareTag("Obstacle")) {
+            onGroundState = true;
+            marioAnimator.SetBool("onGround", onGroundState);
+        }
             
     }
 
@@ -72,26 +86,34 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      // toggle state
-      if (Input.GetKeyDown("a") && faceRightState){
-          faceRightState = false;
-          marioSprite.flipX = true;
-      }
+        marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
+        
+        // toggle state
+        if (Input.GetKeyDown("a") && faceRightState){
+            if (Mathf.Abs(marioBody.velocity.x) >  1.0) {
+                marioAnimator.SetTrigger("onSkid");
+            }
+            faceRightState = false;
+            marioSprite.flipX = true;
+        }
 
-      if (Input.GetKeyDown("d") && !faceRightState){
-          faceRightState = true;
-          marioSprite.flipX = false;
-      }
-      // when jumping, and Gomba is near Mario and we haven't registered our score
-      if (!onGroundState && countScoreState)
-      {
-          if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-          {
-              countScoreState = false;
-              score++;
-              Debug.Log(score);
-          }
-      }
+        if (Input.GetKeyDown("d") && !faceRightState){
+            if (Mathf.Abs(marioBody.velocity.x) >  1.0) {
+                marioAnimator.SetTrigger("onSkid");
+            }
+            faceRightState = true;
+            marioSprite.flipX = false;
+        }
+        // when jumping, and Gomba is near Mario and we haven't registered our score
+        // if (!onGroundState && countScoreState)
+        // {
+        //     //   if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+        //     //   {
+        //     //       countScoreState = false;
+        //     //       score++;
+        //     //       Debug.Log(score);
+        //     //   }
+        // }
     }
     
 }

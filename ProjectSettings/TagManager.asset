@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - Obstacle
+  - Pipe
   layers:
   - Default
   - TransparentFX
@@ -13,10 +15,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - QuestionBox
+  - Obstacle
+  - Spawned
+  - Bush
   - 
   - 
   - 
@@ -40,6 +42,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Hill
+    uniqueID: 147262127
+    locked: 0
+  - name: Bush
+    uniqueID: 1924195503
+    locked: 0
+  - name: Flower
+    uniqueID: 4202494247
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
