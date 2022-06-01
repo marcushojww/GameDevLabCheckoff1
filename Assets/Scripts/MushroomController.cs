@@ -8,7 +8,7 @@ public class MushroomController : MonoBehaviour
     private int moveRight = -1;
     private Vector2 velocity;
     private Rigidbody2D mushroomBody;
-    public float speed = 10;
+    public float speed = 20;
     public float upSpeed = 15;
     // Start is called before the first frame update
     void Start()
