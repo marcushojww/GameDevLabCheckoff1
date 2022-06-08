@@ -19,16 +19,16 @@ TagManager:
   - Obstacle
   - Spawned
   - Bush
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - BG0
+  - BG1
+  - BG2
+  - BG3
+  - BG4
+  - BG5
+  - BG6
+  - BG7
+  - BG8
+  - BG9
   - 
   - 
   - 
@@ -42,6 +42,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG1
+    uniqueID: 774491159
+    locked: 0
+  - name: BG2
+    uniqueID: 1544469147
+    locked: 0
+  - name: BG3
+    uniqueID: 569501687
+    locked: 0
+  - name: BG4
+    uniqueID: 899681657
+    locked: 0
+  - name: BG5
+    uniqueID: 4229101661
+    locked: 0
+  - name: BG6
+    uniqueID: 4214506513
+    locked: 0
+  - name: BG7
+    uniqueID: 2465567039
+    locked: 0
   - name: Hill
     uniqueID: 147262127
     locked: 0

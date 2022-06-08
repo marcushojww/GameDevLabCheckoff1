@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private Animator marioAnimator;
     private AudioSource marioAudio;
 
-    void  PlayJumpSound(){
+    void PlayJumpSound(){
         marioAudio.PlayOneShot(marioAudio.clip);
     }
   
