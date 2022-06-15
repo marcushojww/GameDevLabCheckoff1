@@ -9,6 +9,8 @@ public class GameConstants : ScriptableObject
     int currentScore;
     int currentPlayerHealth;
 
+    public int groundSurface = -4;
+
     // for Reset values
     Vector3 gombaSpawnPointStart = new Vector3(2.5f, -0.45f, 0); // hardcoded location
     // .. other reset values 

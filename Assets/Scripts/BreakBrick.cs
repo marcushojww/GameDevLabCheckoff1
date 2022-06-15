@@ -6,15 +6,18 @@ public class BreakBrick : MonoBehaviour
 {
     private bool broken = false;
     public GameObject prefab;
+    private AudioSource breakableAudio;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        breakableAudio = GetComponent<AudioSource>();
     }
 
     void  OnTriggerEnter2D(Collider2D col){
         if (col.gameObject.CompareTag("Player") &&  !broken){
+            breakableAudio.PlayOneShot(breakableAudio.clip);
             broken  =  true;
             // assume we have 5 debris per box
             for (int x =  0; x<5; x++){

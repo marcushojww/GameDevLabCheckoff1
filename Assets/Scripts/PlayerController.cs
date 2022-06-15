@@ -10,7 +10,9 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 15;
     public float upSpeed = 21;
     private Rigidbody2D marioBody;
+    private BoxCollider2D marioCollider;
     private bool onGroundState = true;
+    private bool isDead = false;
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
     // public Transform enemyLocation;
@@ -30,9 +32,24 @@ public class PlayerController : MonoBehaviour
         // Set to be 30 FPS
 	    Application.targetFrameRate =  30;
 	    marioBody = GetComponent<Rigidbody2D>();
+        marioCollider = GetComponent<BoxCollider2D>();
         marioSprite = GetComponent<SpriteRenderer>();
         marioAnimator = GetComponent<Animator>();
         marioAudio = GetComponent<AudioSource>();
+        GameManager.OnPlayerDeath  +=  PlayerDiesSequence;
+    }
+    void  PlayerDiesSequence(){
+        // Mario dies
+        Debug.Log("Mario dies");
+        isDead = true;
+        if (isDead) {
+            marioBody.AddForce(Vector2.up * upSpeed * 2, ForceMode2D.Impulse);
+            marioCollider.enabled = false;
+            marioAnimator.SetBool("isDead", true);
+        }
+        // SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        // do whatever you want here, animate etc
+        // ...
     }
 
     void FixedUpdate() 
@@ -75,13 +92,13 @@ public class PlayerController : MonoBehaviour
             
     }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("Enemy")){
-            Debug.Log("Collided with Gomba");
-            SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
-        }
-    }
+    // void OnTriggerEnter2D(Collider2D col)
+    // {
+    //     if (col.gameObject.CompareTag("Enemy")){
+    //         Debug.Log("Collided with Gomba");
+    //         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+    //     }
+    // }
 
     // Update is called once per frame
     void Update()
@@ -103,6 +120,13 @@ public class PlayerController : MonoBehaviour
             }
             faceRightState = true;
             marioSprite.flipX = false;
+        }
+        if (Input.GetKeyDown("z")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z,this.gameObject);
+        }
+
+        if (Input.GetKeyDown("x")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.X,this.gameObject);
         }
         // when jumping, and Gomba is near Mario and we haven't registered our score
         // if (!onGroundState && countScoreState)

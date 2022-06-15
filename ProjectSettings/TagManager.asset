@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Obstacle
   - Pipe
+  - Breakable
   layers:
   - Default
   - TransparentFX
@@ -71,6 +72,9 @@ TagManager:
     locked: 0
   - name: Flower
     uniqueID: 4202494247
+    locked: 0
+  - name: Enemy
+    uniqueID: 2838978215
     locked: 0
   - name: Default
     uniqueID: 0

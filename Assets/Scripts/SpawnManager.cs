@@ -12,9 +12,10 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.onIncreaseScore += spawnNewEnemySequence;
         // spawn two gombaEnemy
-        for (int j =  0; j  <  2; j++)
-            // spawnFromPooler(ObjectType.gombaEnemy);
+        for (int j =  0; j  <  1; j++)
+            spawnFromPooler(ObjectType.gombaEnemy);
             spawnFromPooler(ObjectType.greenEnemy);
     }
     void  spawnFromPooler(ObjectType i){
@@ -37,6 +38,20 @@ public class SpawnManager : MonoBehaviour
         else{
             Debug.Log("not enough items in the pool.");
         }
+    }
+    void spawnNewEnemySequence() {
+        StartCoroutine(SpawnTimer());
+    }
+    IEnumerator SpawnTimer() {
+        yield return new WaitForSeconds(2);
+        int rand = Random.Range(0,2);
+        if (rand == 0) {
+            spawnFromPooler(ObjectType.gombaEnemy); 
+        }
+        if (rand == 1) {
+            spawnFromPooler(ObjectType.greenEnemy);
+        }
+
     }
     // Update is called once per frame
     void Update()
